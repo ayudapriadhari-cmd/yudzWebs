@@ -3,216 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberTech | Future Discovery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>CyberCore v2.0 | Integrated System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --neon: #00f2ff; --purple: #bc13fe; --dark: #050505; --red: #ff4444; --glass: rgba(255,255,255,0.05); }
+        body { background: var(--dark); color: white; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; }
+        .hidden { display: none !important; }
+        .glass-card { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid var(--neon); margin-bottom: 20px; }
         
-        :root {
-            --neon: #00f2ff;
-            --purple: #bc13fe;
-            --bg: #020205;
-        }
+        /* Typography */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; color: var(--neon); text-transform: uppercase; }
+        .admin-text { color: var(--red) !important; }
 
-        body {
-            background-color: var(--bg);
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            overflow-x: hidden;
-        }
+        /* Form Elements */
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--neon); color: white; border-radius: 8px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: linear-gradient(45deg, var(--neon), var(--purple)); border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        button:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-danger { background: var(--red); }
 
-        /* Background Animasi Partikel Bergerak */
-        .bg-animate {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #020205 0%, #0a0a20 100%);
-            z-index: -1;
-        }
+        /* Gallery */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .img-box { height: 120px; border-radius: 10px; overflow: hidden; border: 1px solid var(--purple); position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .img-box:hover img { transform: scale(1.2); filter: blur(2px); }
 
-        /* Efek Cahaya Mengikuti Kursor (Hanya berfungsi di PC, di HP jadi statis) */
-        .cursor-glow {
-            position: fixed;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-        }
-
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .title-glitch {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: var(--neon);
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            position: relative;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
-        }
-
-        /* Efek Typing Text */
-        .typing-container {
-            font-size: 1.5rem;
-            height: 2rem;
-            color: var(--purple);
-            margin-top: 10px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            color: white;
-            border-bottom: 2px solid var(--neon);
-            display: inline-block;
-            width: 100%;
-        }
-
-        /* Card System yang Lebih Canggih */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .tech-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            position: relative;
-            transition: 0.5s;
-            overflow: hidden;
-        }
-
-        .tech-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
-        }
-
-        .tech-card:hover::before { left: 100%; }
-
-        .tech-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--neon);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .tech-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon);
-            margin-bottom: 15px;
-        }
-
-        /* Fitur Scroll Progress Bar */
-        #progress-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: transparent;
-            z-index: 1000;
-        }
-        #progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, var(--neon), var(--purple));
-            width: 0%;
-        }
-
-        footer {
-            padding: 50px;
-            text-align: center;
-            background: rgba(0,0,0,0.5);
-            border-top: 1px solid var(--purple);
-        }
+        /* Social/Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.3); }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .badge { padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
+        .bg-red { background: var(--red); }
     </style>
 </head>
 <body>
 
-    <div class="bg-animate"></div>
-    <div class="cursor-glow" id="cursor"></div>
-    <div id="progress-container"><div id="progress-bar"></div></div>
-
-    <header>
-        <h1 class="title-glitch">CYBERTECH</h1>
-        <div class="typing-container">
-            <span id="typing-text"></span>
+    <div style="max-width: 900px; margin: auto;">
+        
+        <div id="auth-screen" class="glass-card" style="text-align: center;">
+            <h1>System Entry</h1>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="handleLogin()">AUTHENTICATE</button>
+            <p style="font-size: 0.8rem; color: #555;">Admin: admin / root</p>
         </div>
-    </header>
 
-    <div class="container">
-        <h2 class="section-title">Inovasi Terkini</h2>
-        <div class="grid">
-            <div class="tech-card">
-                <h3>01. Neural Link</h3>
-                <p>Integrasi langsung antara otak manusia dengan kecerdasan buatan untuk kognisi super.</p>
+        <div id="user-dash" class="hidden">
+            <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2>Welcome, <span id="my-name">User</span></h2>
+                    <span>Followers: <b id="my-followers">0</b> | Following: <b id="my-following">0</b></span>
+                </div>
+                <button onclick="location.reload()" class="btn-danger">LOGOUT</button>
             </div>
-            <div class="tech-card">
-                <h3>02. Deep Space</h3>
-                <p>Eksplorasi planet ekstrasurya menggunakan mesin warp propulsi cahaya.</p>
+
+            <div class="glass-card">
+                <h3>Cloud Gallery</h3>
+                <div class="gallery">
+                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=1"></div>
+                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=2"></div>
+                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=3"></div>
+                </div>
             </div>
-            <div class="tech-card">
-                <h3>03. Bio-Digital</h3>
-                <p>Penyimpanan data dalam untaian DNA yang mampu bertahan selama jutaan tahun.</p>
+
+            <div class="glass-card">
+                <h3>Global Chat</h3>
+                <textarea id="msg-input" placeholder="Ketik pesan..."></textarea>
+                <button onclick="postComment()">SEND</button>
+                <div id="chat-box" style="margin-top: 15px; max-height: 200px; overflow-y: auto;"></div>
+            </div>
+
+            <div class="glass-card">
+                <h3>Network Discover</h3>
+                <div id="user-list-discover"></div>
             </div>
         </div>
+
+        <div id="admin-panel" class="hidden">
+            <div class="glass-card" style="border-color: var(--red);">
+                <h1 class="admin-text">DATABASE CONTROL</h1>
+                <p>Master Access: <span class="badge bg-red">ACTIVE</span></p>
+                <button onclick="location.reload()" style="background:#333; margin-bottom: 20px;">BACK TO LOGIN</button>
+
+                <h3>USER MANAGEMENT DATABASE</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Credentials</th>
+                            <th>Social Stats</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="db-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
-    <footer>
-        <p>Built with &hearts; for the Future | <span style="color:var(--neon)">yudzWebs 2026</span></p>
-    </footer>
-
     <script>
-        // Fitur 1: Efek Typing
-        const textArr = ["Menjelajahi Masa Depan", "Mempelajari Sejarah Tekno", "Inovasi Tanpa Batas"];
-        let count = 0; let index = 0; let currentText = ""; let letter = "";
+        let me = "";
 
-        (function type() {
-            if (count === textArr.length) count = 0;
-            currentText = textArr[count];
-            letter = currentText.slice(0, ++index);
-            document.querySelector("#typing-text").textContent = letter;
-            if (letter.length === currentText.length) {
-                count++; index = 0;
-                setTimeout(type, 2000);
-            } else {
-                setTimeout(type, 100);
+        // Inisialisasi Database
+        if(!localStorage.getItem('core_db')) {
+            const initialDB = {
+                "admin": { password: "root", role: "admin", followers: [], following: [] },
+                "yud": { password: "123", role: "user", followers: [], following: [] }
+            };
+            localStorage.setItem('core_db', JSON.stringify(initialDB));
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value;
+            let db = JSON.parse(localStorage.getItem('core_db'));
+
+            // Auto-Register jika baru
+            if(!db[u] && u !== "") {
+                db[u] = { password: p, role: "user", followers: [], following: [] };
+                localStorage.setItem('core_db', JSON.stringify(db));
             }
-        }());
 
-        // Fitur 2: Progress Bar Scroll
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-        };
+            if(db[u] && db[u].password === p) {
+                me = u;
+                document.getElementById('auth-screen').classList.add('hidden');
+                if(db[u].role === 'admin') showAdmin(); else showUser();
+            } else {
+                alert("Wrong credentials!");
+            }
+        }
 
-        // Fitur 3: Cursor Glow (Hanya untuk mouse)
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        function showUser() {
+            document.getElementById('user-dash').classList.remove('hidden');
+            document.getElementById('my-name').innerText = me;
+            updateStats();
+            renderNetwork();
+            loadChat();
+        }
+
+        function showAdmin() {
+            document.getElementById('admin-panel').classList.remove('hidden');
+            renderAdminDB();
+        }
+
+        // --- Fitur Social ---
+        function updateStats() {
+            const db = JSON.parse(localStorage.getItem('core_db'));
+            document.getElementById('my-followers').innerText = db[me].followers.length;
+            document.getElementById('my-following').innerText = db[me].following.length;
+        }
+
+        function renderNetwork() {
+            const db = JSON.parse(localStorage.getItem('core_db'));
+            const container = document.getElementById('user-list-discover');
+            container.innerHTML = "";
+            Object.keys(db).forEach(user => {
+                if(user === me) return;
+                const isFollowing = db[me].following.includes(user);
+                container.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; padding:5px; border-bottom:1px solid #222;">
+                        <span>@${user}</span>
+                        <button onclick="toggleFollow('${user}')" style="padding:2px 10px; font-size:0.7rem;">
+                            ${isFollowing ? 'Unfollow' : 'Follow'}
+                        </button>
+                    </div>`;
+            });
+        }
+
+        function toggleFollow(target) {
+            let db = JSON.parse(localStorage.getItem('core_db'));
+            if(db[me].following.includes(target)) {
+                db[me].following = db[me].following.filter(u => u !== target);
+                db[target].followers = db[target].followers.filter(u => u !== me);
+            } else {
+                db[me].following.push(target);
+                db[target].followers.push(me);
+            }
+            localStorage.setItem('core_db', JSON.stringify(db));
+            updateStats(); renderNetwork();
+        }
+
+        // --- Fitur Chat ---
+        function postComment() {
+            const msg = document.getElementById('msg-input').value;
+            if(!msg) return;
+            let chats = JSON.parse(localStorage.getItem('core_chats') || '[]');
+            chats.push({ user: me, text: msg });
+            localStorage.setItem('core_chats', JSON.stringify(chats));
+            document.getElementById('msg-input').value = "";
+            loadChat();
+        }
+
+        function loadChat() {
+            const chats = JSON.parse(localStorage.getItem('core_chats') || '[]');
+            document.getElementById('chat-box').innerHTML = chats.reverse().map(c => `
+                <div style="margin-bottom:8px; border-left:2px solid var(--purple); padding-left:10px;">
+                    <b style="color:var(--neon)">${c.user}:</b> ${c.text}
+                </div>`).join('');
+        }
+
+        // --- Fitur Admin Database UI ---
+        function renderAdminDB() {
+            const db = JSON.parse(localStorage.getItem('core_db'));
+            const tbody = document.getElementById('db-table-body');
+            tbody.innerHTML = "";
+            Object.keys(db).forEach(u => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${u}</b> <br> <small>${db[u].role}</small></td>
+                        <td>PW: <span style="color:var(--neon)">${db[u].password}</span></td>
+                        <td>F: ${db[u].followers.length} | L: ${db[u].following.length}</td>
+                        <td>
+                            ${u !== 'admin' ? `<button onclick="deleteData('${u}')" class="badge bg-red" style="border:none; cursor:pointer;">PURGE</button>` : 'System'}
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function deleteData(target) {
+            if(confirm("Hapus data user ini secara permanen?")) {
+                let db = JSON.parse(localStorage.getItem('core_db'));
+                delete db[target];
+                localStorage.setItem('core_db', JSON.stringify(db));
+                renderAdminDB();
+            }
+        }
     </script>
 </body>
 </html>
