@@ -3,131 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechHistory | Jejak Evolusi Teknologi</title>
+    <title>CyberTech | Future Discovery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --primary: #00d4ff;
-            --dark: #0a0a0c;
-            --card: #16161a;
-            --text: #e0e0e0;
+            --neon: #00f2ff;
+            --purple: #bc13fe;
+            --bg: #020205;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            margin: 0;
-            line-height: 1.6;
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Background Animasi Partikel Bergerak */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #020205 0%, #0a0a20 100%);
+            z-index: -1;
+        }
+
+        /* Efek Cahaya Mengikuti Kursor (Hanya berfungsi di PC, di HP jadi statis) */
+        .cursor-glow {
+            position: fixed;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
         }
 
         header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            height: 400px;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border-bottom: 3px solid var(--primary);
+            position: relative;
         }
 
-        h1 { font-size: 3rem; margin-bottom: 0.5rem; color: var(--primary); }
-        p.subtitle { font-size: 1.2rem; opacity: 0.8; }
+        .title-glitch {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--neon);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            position: relative;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        /* Efek Typing Text */
+        .typing-container {
+            font-size: 1.5rem;
+            height: 2rem;
+            color: var(--purple);
+            margin-top: 10px;
+        }
 
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
         }
 
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: white;
+            border-bottom: 2px solid var(--neon);
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* Card System yang Lebih Canggih */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 30px;
         }
 
-        .card {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 5px solid var(--primary);
-            transition: transform 0.3s ease;
+        .tech-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            position: relative;
+            transition: 0.5s;
+            overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+        .tech-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
         }
 
-        .card h3 { color: var(--primary); margin-top: 0; }
+        .tech-card:hover::before { left: 100%; }
+
+        .tech-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--neon);
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .tech-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon);
+            margin-bottom: 15px;
+        }
+
+        /* Fitur Scroll Progress Bar */
+        #progress-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: transparent;
+            z-index: 1000;
+        }
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--neon), var(--purple));
+            width: 0%;
+        }
 
         footer {
+            padding: 50px;
             text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            border-top: 1px solid #333;
-            margin-top: 4rem;
-        }
-
-        .badge {
-            background: var(--primary);
-            color: black;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid var(--purple);
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-animate"></div>
+    <div class="cursor-glow" id="cursor"></div>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
     <header>
-        <h1>TECH HISTORY</h1>
-        <p class="subtitle">Menjelajahi Garis Waktu Inovasi Manusia</p>
+        <h1 class="title-glitch">CYBERTECH</h1>
+        <div class="typing-container">
+            <span id="typing-text"></span>
+        </div>
     </header>
 
     <div class="container">
-        <section>
-            <h2>Garis Waktu Evolusi</h2>
-            <div class="grid">
-                <div class="card">
-                    <span class="badge">1945</span>
-                    <h3>ENIAC</h3>
-                    <p>Komputer elektronik pertama di dunia yang dapat diprogram ulang. Mengisi seluruh ruangan dan beratnya mencapai 27 ton!</p>
-                </div>
-
-                <div class="card">
-                    <span class="badge">1969</span>
-                    <h3>ARPANET</h3>
-                    <p>Cikal bakal internet modern dikembangkan oleh Departemen Pertahanan AS, menghubungkan beberapa komputer universitas untuk pertama kalinya.</p>
-                </div>
-
-                <div class="card">
-                    <span class="badge">1989</span>
-                    <h3>World Wide Web (WWW)</h3>
-                    <p>Tim Berners-Lee menciptakan sistem navigasi informasi menggunakan hyperlink yang kita gunakan untuk browsing hari ini.</p>
-                </div>
-
-                <div class="card">
-                    <span class="badge">2007</span>
-                    <h3>Era Smartphone</h3>
-                    <p>Peluncuran iPhone pertama mengubah cara manusia berinteraksi dengan teknologi, membawa internet ke dalam saku setiap orang.</p>
-                </div>
-
-                <div class="card">
-                    <span class="badge">2020+</span>
-                    <h3>Artificial Intelligence</h3>
-                    <p>Era di mana mesin tidak hanya menghitung, tapi mulai bisa menalar, berkarya, dan menjadi asisten kreatif manusia.</p>
-                </div>
+        <h2 class="section-title">Inovasi Terkini</h2>
+        <div class="grid">
+            <div class="tech-card">
+                <h3>01. Neural Link</h3>
+                <p>Integrasi langsung antara otak manusia dengan kecerdasan buatan untuk kognisi super.</p>
             </div>
-        </section>
+            <div class="tech-card">
+                <h3>02. Deep Space</h3>
+                <p>Eksplorasi planet ekstrasurya menggunakan mesin warp propulsi cahaya.</p>
+            </div>
+            <div class="tech-card">
+                <h3>03. Bio-Digital</h3>
+                <p>Penyimpanan data dalam untaian DNA yang mampu bertahan selama jutaan tahun.</p>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 TechHistory Project | Dibuat dengan Kode Dasar HTML/CSS</p>
+        <p>Built with &hearts; for the Future | <span style="color:var(--neon)">yudzWebs 2026</span></p>
     </footer>
 
+    <script>
+        // Fitur 1: Efek Typing
+        const textArr = ["Menjelajahi Masa Depan", "Mempelajari Sejarah Tekno", "Inovasi Tanpa Batas"];
+        let count = 0; let index = 0; let currentText = ""; let letter = "";
+
+        (function type() {
+            if (count === textArr.length) count = 0;
+            currentText = textArr[count];
+            letter = currentText.slice(0, ++index);
+            document.querySelector("#typing-text").textContent = letter;
+            if (letter.length === currentText.length) {
+                count++; index = 0;
+                setTimeout(type, 2000);
+            } else {
+                setTimeout(type, 100);
+            }
+        }());
+
+        // Fitur 2: Progress Bar Scroll
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Fitur 3: Cursor Glow (Hanya untuk mouse)
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+    </script>
 </body>
-                      </html>
-                      
+</html>
