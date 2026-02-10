@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHistory | Jejak Evolusi Teknologi</title>
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --dark: #0a0a0c;
+            --card: #16161a;
+            --text: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 0.5rem; color: var(--primary); }
+        p.subtitle { font-size: 1.2rem; opacity: 0.8; }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .card h3 { color: var(--primary); margin-top: 0; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+            margin-top: 4rem;
+        }
+
+        .badge {
+            background: var(--primary);
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>TECH HISTORY</h1>
+        <p class="subtitle">Menjelajahi Garis Waktu Inovasi Manusia</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Garis Waktu Evolusi</h2>
+            <div class="grid">
+                <div class="card">
+                    <span class="badge">1945</span>
+                    <h3>ENIAC</h3>
+                    <p>Komputer elektronik pertama di dunia yang dapat diprogram ulang. Mengisi seluruh ruangan dan beratnya mencapai 27 ton!</p>
+                </div>
+
+                <div class="card">
+                    <span class="badge">1969</span>
+                    <h3>ARPANET</h3>
+                    <p>Cikal bakal internet modern dikembangkan oleh Departemen Pertahanan AS, menghubungkan beberapa komputer universitas untuk pertama kalinya.</p>
+                </div>
+
+                <div class="card">
+                    <span class="badge">1989</span>
+                    <h3>World Wide Web (WWW)</h3>
+                    <p>Tim Berners-Lee menciptakan sistem navigasi informasi menggunakan hyperlink yang kita gunakan untuk browsing hari ini.</p>
+                </div>
+
+                <div class="card">
+                    <span class="badge">2007</span>
+                    <h3>Era Smartphone</h3>
+                    <p>Peluncuran iPhone pertama mengubah cara manusia berinteraksi dengan teknologi, membawa internet ke dalam saku setiap orang.</p>
+                </div>
+
+                <div class="card">
+                    <span class="badge">2020+</span>
+                    <h3>Artificial Intelligence</h3>
+                    <p>Era di mana mesin tidak hanya menghitung, tapi mulai bisa menalar, berkarya, dan menjadi asisten kreatif manusia.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 TechHistory Project | Dibuat dengan Kode Dasar HTML/CSS</p>
+    </footer>
+
+</body>
+                      </html>
+                      
