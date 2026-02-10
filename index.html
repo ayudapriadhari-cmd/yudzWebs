@@ -3,229 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberCore v2.0 | Integrated System</title>
+    <title>CyberCore v7.0 | The Final Boss</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00f2ff; --purple: #bc13fe; --dark: #050505; --red: #ff4444; --glass: rgba(255,255,255,0.05); }
-        body { background: var(--dark); color: white; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; }
-        .hidden { display: none !important; }
-        .glass-card { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid var(--neon); margin-bottom: 20px; }
+        :root { --neon: #00f2ff; --purple: #bc13fe; --dark: #020205; --red: #ff3e3e; --glass: rgba(255,255,255,0.05); --text: white; }
+        .light-mode { --dark: #f0f2f5; --text: #1a1a1a; --glass: rgba(0,0,0,0.05); --neon: #007bff; }
         
-        /* Typography */
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; color: var(--neon); text-transform: uppercase; }
-        .admin-text { color: var(--red) !important; }
-
-        /* Form Elements */
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--neon); color: white; border-radius: 8px; box-sizing: border-box; }
+        body { background: var(--dark); color: var(--text); font-family: 'Rajdhani', sans-serif; margin: 0; min-height: 100vh; padding: 20px; transition: 0.3s; }
+        .hidden { display: none !important; }
+        .glass { background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--neon); width: 100%; max-width: 900px; margin: auto; box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); }
+        
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; color: var(--neon); }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.2); border: 1px solid var(--neon); color: var(--text); border-radius: 8px; box-sizing: border-box; }
         button { padding: 10px 20px; background: linear-gradient(45deg, var(--neon), var(--purple)); border: none; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        button:hover { transform: scale(1.05); filter: brightness(1.2); }
-        .btn-danger { background: var(--red); }
-
-        /* Gallery */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
-        .img-box { height: 120px; border-radius: 10px; overflow: hidden; border: 1px solid var(--purple); position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .img-box:hover img { transform: scale(1.2); filter: blur(2px); }
-
-        /* Social/Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.3); }
-        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
-        .badge { padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
-        .bg-red { background: var(--red); }
+        
+        /* News Feed */
+        .feed-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--neon); }
+        .broadcast { background: rgba(255, 62, 62, 0.1); border: 1px solid var(--red); padding: 10px; margin-bottom: 20px; border-radius: 10px; text-align: center; color: var(--red); animation: blink 2s infinite; }
+        
+        @keyframes blink { 50% { opacity: 0.7; } }
+        
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: var(--glass); padding: 15px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th, td { padding: 8px; border-bottom: 1px solid #444; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div style="max-width: 900px; margin: auto;">
-        
-        <div id="auth-screen" class="glass-card" style="text-align: center;">
-            <h1>System Entry</h1>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="handleLogin()">AUTHENTICATE</button>
-            <p style="font-size: 0.8rem; color: #555;">Admin: admin / root</p>
-        </div>
+    <div id="auth-screen" class="glass" style="max-width: 400px; text-align: center; margin-top: 5vh;">
+        <h1>SYSTEM V7</h1>
+        <input type="text" id="user" placeholder="Username">
+        <input type="email" id="gmail" placeholder="Gmail (@gmail.com)" class="hidden">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="handleAuth()" id="btn-main">LOGIN</button>
+        <p onclick="toggleReg()" id="toggle-text" style="cursor:pointer; text-decoration:underline; font-size:0.8rem; margin-top:10px;">Belum punya akun? Register</p>
+    </div>
 
-        <div id="user-dash" class="hidden">
-            <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center;">
+    <div id="main-ui" class="hidden">
+        <div class="glass">
+            <div id="broadcast-msg" class="hidden broadcast"></div>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>CYBERCORE</h2>
                 <div>
-                    <h2>Welcome, <span id="my-name">User</span></h2>
-                    <span>Followers: <b id="my-followers">0</b> | Following: <b id="my-following">0</b></span>
-                </div>
-                <button onclick="location.reload()" class="btn-danger">LOGOUT</button>
-            </div>
-
-            <div class="glass-card">
-                <h3>Cloud Gallery</h3>
-                <div class="gallery">
-                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=1"></div>
-                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=2"></div>
-                    <div class="img-box"><img src="https://picsum.photos/200/300?sig=3"></div>
+                    <button onclick="toggleTheme()" style="background:#444; font-size:0.7rem;">🌓 MODE</button>
+                    <button onclick="location.reload()" style="background:var(--red);">LOGOUT</button>
                 </div>
             </div>
 
-            <div class="glass-card">
-                <h3>Global Chat</h3>
-                <textarea id="msg-input" placeholder="Ketik pesan..."></textarea>
-                <button onclick="postComment()">SEND</button>
-                <div id="chat-box" style="margin-top: 15px; max-height: 200px; overflow-y: auto;"></div>
-            </div>
+            <div class="dashboard-grid">
+                <div>
+                    <div class="card">
+                        <h3>Post Update</h3>
+                        <textarea id="post-input" placeholder="Apa yang kamu pikirkan?"></textarea>
+                        <button onclick="createPost()" style="width:100%;">POST TO FEED</button>
+                    </div>
+                    <div class="card" style="margin-top:20px;">
+                        <h3>Feed Status</h3>
+                        <div id="feed-container" style="max-height: 300px; overflow-y:auto;"></div>
+                    </div>
+                </div>
 
-            <div class="glass-card">
-                <h3>Network Discover</h3>
-                <div id="user-list-discover"></div>
+                <div>
+                    <div class="card">
+                        <h3>Network</h3>
+                        <div id="network-list"></div>
+                    </div>
+                    
+                    <div id="admin-area" class="hidden card" style="margin-top:20px; border: 1px solid var(--red);">
+                        <h3 style="color:var(--red);">ADMIN POWERS</h3>
+                        <input type="text" id="bc-input" placeholder="Pesan Broadcast...">
+                        <button onclick="sendBroadcast()" style="background:var(--red); width:100%;">SEND BROADCAST</button>
+                        
+                        <h3 style="margin-top:20px;">USER DB</h3>
+                        <div style="overflow-x:auto;">
+                            <table id="admin-table"></table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div id="admin-panel" class="hidden">
-            <div class="glass-card" style="border-color: var(--red);">
-                <h1 class="admin-text">DATABASE CONTROL</h1>
-                <p>Master Access: <span class="badge bg-red">ACTIVE</span></p>
-                <button onclick="location.reload()" style="background:#333; margin-bottom: 20px;">BACK TO LOGIN</button>
-
-                <h3>USER MANAGEMENT DATABASE</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Credentials</th>
-                            <th>Social Stats</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="db-table-body"></tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        let me = "";
+        let sessionUser = "";
+        let isReg = false;
 
-        // Inisialisasi Database
-        if(!localStorage.getItem('core_db')) {
-            const initialDB = {
-                "admin": { password: "root", role: "admin", followers: [], following: [] },
-                "yud": { password: "123", role: "user", followers: [], following: [] }
-            };
-            localStorage.setItem('core_db', JSON.stringify(initialDB));
+        // DB INIT
+        if(!localStorage.getItem('v7_db')) {
+            localStorage.setItem('v7_db', JSON.stringify({
+                "admin": { pw: "root", gmail: "admin@gmail.com", role: "admin", followers: [], following: [] }
+            }));
         }
 
-        function handleLogin() {
-            const u = document.getElementById('username').value.trim();
-            const p = document.getElementById('password').value;
-            let db = JSON.parse(localStorage.getItem('core_db'));
+        function toggleReg() {
+            isReg = !isReg;
+            document.getElementById('gmail').classList.toggle('hidden');
+            document.getElementById('btn-main').innerText = isReg ? "REGISTER" : "LOGIN";
+            document.getElementById('toggle-text').innerText = isReg ? "Sudah punya akun? Login" : "Belum punya akun? Register";
+        }
 
-            // Auto-Register jika baru
-            if(!db[u] && u !== "") {
-                db[u] = { password: p, role: "user", followers: [], following: [] };
-                localStorage.setItem('core_db', JSON.stringify(db));
-            }
+        function handleAuth() {
+            const u = document.getElementById('user').value.trim();
+            const p = document.getElementById('pass').value;
+            const g = document.getElementById('gmail').value;
+            let db = JSON.parse(localStorage.getItem('v7_db'));
 
-            if(db[u] && db[u].password === p) {
-                me = u;
-                document.getElementById('auth-screen').classList.add('hidden');
-                if(db[u].role === 'admin') showAdmin(); else showUser();
+            if(isReg) {
+                if(!g.includes("@gmail.com")) return alert("Gmail wajib!");
+                db[u] = { pw: p, gmail: g, role: "user", followers: [], following: [] };
+                localStorage.setItem('v7_db', JSON.stringify(db));
+                alert("Berhasil!"); location.reload();
             } else {
-                alert("Wrong credentials!");
+                if(db[u] && db[u].pw === p) {
+                    sessionUser = u;
+                    loadSystem();
+                } else alert("Gagal!");
             }
         }
 
-        function showUser() {
-            document.getElementById('user-dash').classList.remove('hidden');
-            document.getElementById('my-name').innerText = me;
-            updateStats();
+        function loadSystem() {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('main-ui').classList.remove('hidden');
+            const db = JSON.parse(localStorage.getItem('v7_db'));
+            
+            if(db[sessionUser].role === 'admin') {
+                document.getElementById('admin-area').classList.remove('hidden');
+                renderAdmin();
+            }
+            renderFeed();
             renderNetwork();
-            loadChat();
+            checkBroadcast();
         }
 
-        function showAdmin() {
-            document.getElementById('admin-panel').classList.remove('hidden');
-            renderAdminDB();
+        // FEED SYSTEM
+        function createPost() {
+            const txt = document.getElementById('post-input').value;
+            if(!txt) return;
+            let posts = JSON.parse(localStorage.getItem('v7_posts') || '[]');
+            posts.unshift({ u: sessionUser, t: txt, time: new Date().toLocaleString() });
+            localStorage.setItem('v7_posts', JSON.stringify(posts));
+            document.getElementById('post-input').value = "";
+            renderFeed();
         }
 
-        // --- Fitur Social ---
-        function updateStats() {
-            const db = JSON.parse(localStorage.getItem('core_db'));
-            document.getElementById('my-followers').innerText = db[me].followers.length;
-            document.getElementById('my-following').innerText = db[me].following.length;
+        function renderFeed() {
+            const posts = JSON.parse(localStorage.getItem('v7_posts') || '[]');
+            document.getElementById('feed-container').innerHTML = posts.map(p => `
+                <div class="feed-item">
+                    <b>@${p.u}</b> <small style="float:right">${p.time}</small><br>
+                    <span>${p.t}</span>
+                </div>
+            `).join('');
+        }
+
+        // ADMIN FEATURES
+        function sendBroadcast() {
+            const msg = document.getElementById('bc-input').value;
+            localStorage.setItem('v7_bc', msg);
+            alert("Broadcast Terkirim!");
+            location.reload();
+        }
+
+        function checkBroadcast() {
+            const bc = localStorage.getItem('v7_bc');
+            if(bc) {
+                const el = document.getElementById('broadcast-msg');
+                el.innerText = "📢 ADMIN: " + bc;
+                el.classList.remove('hidden');
+            }
+        }
+
+        function renderAdmin() {
+            const db = JSON.parse(localStorage.getItem('v7_db'));
+            let h = "<tr><th>User</th><th>Pass</th><th>Aksi</th></tr>";
+            for(let u in db) {
+                h += `<tr><td>${u}</td><td>${db[u].pw}</td><td><button onclick="delUser('${u}')" style="background:red; padding:2px 5px; font-size:0.6rem;">X</button></td></tr>`;
+            }
+            document.getElementById('admin-table').innerHTML = h;
+        }
+
+        function delUser(u) {
+            let db = JSON.parse(localStorage.getItem('v7_db'));
+            delete db[u];
+            localStorage.setItem('v7_db', JSON.stringify(db));
+            renderAdmin();
+        }
+
+        // THEME
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
         }
 
         function renderNetwork() {
-            const db = JSON.parse(localStorage.getItem('core_db'));
-            const container = document.getElementById('user-list-discover');
-            container.innerHTML = "";
-            Object.keys(db).forEach(user => {
-                if(user === me) return;
-                const isFollowing = db[me].following.includes(user);
-                container.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; padding:5px; border-bottom:1px solid #222;">
-                        <span>@${user}</span>
-                        <button onclick="toggleFollow('${user}')" style="padding:2px 10px; font-size:0.7rem;">
-                            ${isFollowing ? 'Unfollow' : 'Follow'}
-                        </button>
-                    </div>`;
-            });
-        }
-
-        function toggleFollow(target) {
-            let db = JSON.parse(localStorage.getItem('core_db'));
-            if(db[me].following.includes(target)) {
-                db[me].following = db[me].following.filter(u => u !== target);
-                db[target].followers = db[target].followers.filter(u => u !== me);
-            } else {
-                db[me].following.push(target);
-                db[target].followers.push(me);
-            }
-            localStorage.setItem('core_db', JSON.stringify(db));
-            updateStats(); renderNetwork();
-        }
-
-        // --- Fitur Chat ---
-        function postComment() {
-            const msg = document.getElementById('msg-input').value;
-            if(!msg) return;
-            let chats = JSON.parse(localStorage.getItem('core_chats') || '[]');
-            chats.push({ user: me, text: msg });
-            localStorage.setItem('core_chats', JSON.stringify(chats));
-            document.getElementById('msg-input').value = "";
-            loadChat();
-        }
-
-        function loadChat() {
-            const chats = JSON.parse(localStorage.getItem('core_chats') || '[]');
-            document.getElementById('chat-box').innerHTML = chats.reverse().map(c => `
-                <div style="margin-bottom:8px; border-left:2px solid var(--purple); padding-left:10px;">
-                    <b style="color:var(--neon)">${c.user}:</b> ${c.text}
-                </div>`).join('');
-        }
-
-        // --- Fitur Admin Database UI ---
-        function renderAdminDB() {
-            const db = JSON.parse(localStorage.getItem('core_db'));
-            const tbody = document.getElementById('db-table-body');
-            tbody.innerHTML = "";
-            Object.keys(db).forEach(u => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><b>${u}</b> <br> <small>${db[u].role}</small></td>
-                        <td>PW: <span style="color:var(--neon)">${db[u].password}</span></td>
-                        <td>F: ${db[u].followers.length} | L: ${db[u].following.length}</td>
-                        <td>
-                            ${u !== 'admin' ? `<button onclick="deleteData('${u}')" class="badge bg-red" style="border:none; cursor:pointer;">PURGE</button>` : 'System'}
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        function deleteData(target) {
-            if(confirm("Hapus data user ini secara permanen?")) {
-                let db = JSON.parse(localStorage.getItem('core_db'));
-                delete db[target];
-                localStorage.setItem('core_db', JSON.stringify(db));
-                renderAdminDB();
-            }
+            const db = JSON.parse(localStorage.getItem('v7_db'));
+            let h = "";
+            for(let u in db) { if(u !== sessionUser) h += `<div>@${u}</div>`; }
+            document.getElementById('network-list').innerHTML = h;
         }
     </script>
 </body>
